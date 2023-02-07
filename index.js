@@ -1,33 +1,41 @@
 import chalk from 'chalk';
 import fs from 'fs'; // create file system
 
+const name = 'Robert';
+const lastname = 'Wägar';
+const dateNow = new Date();
+
+const fullName = `${name} ${lastname}`;
+
 console.log(
-  chalk.green(
-    'Green light means go! ' +
-      chalk.hex('#FFC0CB').underline.bold('with a pink substring')
+  chalk.hex('#f47a60')(
+    `This console log is done by ${fullName}! ` +
+      chalk.hex('#FFC0CB').underline.bold('with a pink substring') +
+      chalk.hex('#7fefdc')(` on ${dateNow}`)
   )
 );
 console.log(chalk.blue('The skies are blue!'));
 console.log(chalk.red('Red could show warning or Error'));
-console.log(chalk.yellow('Usually shows to wait!'));
+console.log(chalk.yellow('Yellow - Usually shows to wait!'));
 
 // writing files
 
 fs.writeFile(
-  './files/assignment2_1.txt',
-  'Hello there user one',
+  './files/assignment2_1.md',
+  `This file is written by ${fullName} on date: ${dateNow}`,
   (err, data) => {
     console.log('file succesfully written');
   }
 );
 
 fs.writeFile(
-  './files/assignment2_2.txt',
-  'Hello there here is an other file created',
+  './files/assignment2_2.md',
+  'Here is and other file...',
   (err, data) => {
     console.log('file succesfully written');
   }
 );
+
 /* 
 function logVersion() {
 
@@ -56,19 +64,6 @@ function logVersion() {
   });
 } */
 
-const tick = () => {
-  const now = new Date();
-
-  const hrs = now.getHours();
-
-  const min = now.getMinutes();
-
-  const sec = now.getSeconds();
-
-  console.log(`${hrs} : ${min} : ${sec}`);
-};
-setInterval(tick, 1000);
-
 // check dates between when course started and today
 let startDate = new Date('01/31/2023');
 let todaysDate = new Date();
@@ -79,7 +74,10 @@ const days = (startDate, todaysDate) => {
   let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
   return TotalDays;
 };
-console.log(days(startDate, todaysDate) + ' days - since course started');
+console.log(
+  chalk.hex('#4203c9')(days(startDate, todaysDate) +
+    ' days - since course started'
+));
 
 // if used as html template literal to show on screen ?
 /* 
@@ -94,3 +92,18 @@ console.log(days(startDate, todaysDate) + ' days - since course started');
   clock.innerHTML = html;
 };
 */
+
+/* 
+const tick = () => {
+  const now = new Date();
+
+  const hrs = now.getHours();
+
+  const min = now.getMinutes();
+
+  const sec = now.getSeconds();
+
+  console.log(`${hrs} : ${min} : ${sec}`);
+};
+setInterval(tick, 1000);
+ */
