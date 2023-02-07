@@ -1,5 +1,9 @@
 import chalk from 'chalk';
 import fs from 'fs'; // create file system
+import { exec } from 'child_process';
+import util from 'util';
+
+const asyncExec = util.promisify(exec);
 
 const name = 'Robert';
 const lastname = 'Wägar';
@@ -18,7 +22,19 @@ console.log(chalk.blue('The skies are blue!'));
 console.log(chalk.red('Red could show warning or Error'));
 console.log(chalk.yellow('Yellow - Usually shows to wait!'));
 
-// writing files
+// writing files and adding data
+
+const { stdout, stderr } = await asyncExec('git --version');
+console.log(`git version: ${stdout}`);
+
+const data = `
+name: ${fullName}
+date: ${dateNow}
+npm & node: ${process.env.npm_config_user_agent}
+git version: ${stdout}
+`;
+
+await fs.promises.writeFile('./files/index.md', data);
 
 fs.writeFile(
   './files/assignment2_1.md',
@@ -75,9 +91,10 @@ const days = (startDate, todaysDate) => {
   return TotalDays;
 };
 console.log(
-  chalk.hex('#4203c9')(days(startDate, todaysDate) +
-    ' days - since course started'
-));
+  chalk.hex('#4203c9')(
+    days(startDate, todaysDate) + ' days - since course started'
+  )
+);
 
 // if used as html template literal to show on screen ?
 /* 
