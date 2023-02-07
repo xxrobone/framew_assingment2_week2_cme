@@ -28,10 +28,12 @@ const { stdout, stderr } = await asyncExec('git --version');
 console.log(`git version: ${stdout}`);
 
 const data = `
-name: ${fullName}
-date: ${dateNow}
-npm & node: ${process.env.npm_config_user_agent}
-git version: ${stdout}
+# Assignment 2
+### at cme - course frameworks <br> 
+- Name: ${fullName} <br> 
+- Date: ${dateNow} <br> 
+- Npm & node: ${process.env.npm_config_user_agent} <br> 
+- Git version: ${stdout}
 `;
 
 await fs.promises.writeFile('./files/index.md', data);
