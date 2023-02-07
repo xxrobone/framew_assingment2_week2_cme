@@ -54,34 +54,6 @@ fs.writeFile(
   }
 );
 
-/* 
-function logVersion() {
-
-  exec('git --version', (error, stdout) => {
-    if (error) {
-      console.error(`Error getting Git version: ${error}`);
-    } else {
-      console.log(`Git version: ${stdout.trim()}`);
-    }
-  });
-
-  exec('npm -v', (error, stdout) => {
-    if (error) {
-      console.error(`Error getting npm version: ${error}`);
-    } else {
-      console.log(`npm version: ${stdout.trim()}`);
-    }
-  });
-
-  exec('node -v', (error, stdout) => {
-    if (error) {
-      console.error(`Error getting Node.js version: ${error}`);
-    } else {
-      console.log(`Node.js version: ${stdout.trim()}`);
-    }
-  });
-} */
-
 // check dates between when course started and today
 let startDate = new Date('01/31/2023');
 let todaysDate = new Date();
