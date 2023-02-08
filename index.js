@@ -168,7 +168,7 @@ const html = `
     <h2>Testing with Chai and Mocha</h2>
     <p>
       This I have only tried once before, and it took awhile, I also tested 
-      Jest and read about SuperTest for use testing http get, post, put, delete.
+      Jest and read about SuperTest for use testing http get, post, put, delete, using chai-http on this one :D.
       I know compenies want you to have knowledge of testing so will try it out with
       react too, do some project using TDD, also read about BDD
     </p>
