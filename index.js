@@ -164,6 +164,14 @@ const html = `
     <p>
     server is hosted on port ${PORT}
     </p>
+
+    <h2>Testing with Chai and Mocha</h2>
+    <p>
+      This I have only tried once before, and it took awhile, I also tested 
+      Jest and read about SuperTest for use testing http get, post, put, delete.
+      I know compenies want you to have knowledge of testing so will try it out with
+      react too, do some project using TDD, also read about BDD
+    </p>
 </main>
 </body>
 </html>
@@ -194,7 +202,7 @@ main {
   align-items: flex-start;
   justify-content: flex-start;
   height: 100%;
-  width: 60%;
+  width: 90%;
   background-color: transparent;
 }
 
@@ -222,6 +230,12 @@ h4 {
   letter-spacing: 2px;
   line-height: 1.5;
 }
+
+@media screen and (min-width: 768px) {    
+  main {
+      width: 60%;
+  }
+}   
 `;
 
 await fs.promises.writeFile('./public/style.css', css);

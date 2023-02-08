@@ -1,17 +1,19 @@
 import express from 'express';
 
 // creating fake server so the test passes
+// this is not my strong side... yet
 
-const serverForTest = () => {
-  const t_app = express();
-  const tport = 6000;
-  const result = {
+export const result = {
     dancer: 'tdd testing db',
     person: {
       id: 1,
       name: 'Robert Waegar',
     },
   };
+
+export const server = () => {
+  const t_app = express();
+  const tport = 6000;
 
   t_app.get('/', (req, res) => {
     res.send(result);
@@ -22,6 +24,3 @@ const serverForTest = () => {
   return t_app;
 };
 
-module.exports = {
-  serverForTest,
-};

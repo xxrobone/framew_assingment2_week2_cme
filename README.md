@@ -11,6 +11,8 @@ node and git week
 - nodemon
 - express
 - fileURLToPath
+- Chai
+- Mocha
 
 ## how to use
 
@@ -20,5 +22,11 @@ Just download or clone
 - server is hosted on port 5000
 
 http://localhost:5000
+
+## how to test
+
+npm run test
+- takes in server function from server.js file and a result object 
+- there is commented fail tests in the test.js file, you can try out 
 
 
