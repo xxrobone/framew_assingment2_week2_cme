@@ -27,8 +27,15 @@ const dateNow = new Date();
 let day = dateNow.getDay();
 let month = dateNow.getMonth() + 1;
 let year = dateNow.getYear();
+
+ const newDate = year + '/' + month + '/' + day; 
  */
-/* const newDate = year + '/' + month + '/' + day; */
+// for my "clock" hehe
+const now = new Date();
+
+const hrs = now.getHours();
+const min = now.getMinutes();
+// if using seconds const sec = now.getSeconds();
 
 // check dates between when course started and today
 let startDate = new Date('01/31/2023');
@@ -130,7 +137,11 @@ fs.writeFile(
 // with promise would be like this
 // fs.promises.mkdir('/tmp/a/apple', { recursive: true }).catch(console.error);
 
-// html "data"
+// html "data" :<span>${sec}</span> if I want to put in seconds
+const time = `
+ / Time:
+<span>${hrs}</span>:<span>${min}</span> 
+`;
 
 const html = `
 <!DOCTYPE html>
@@ -146,7 +157,7 @@ const html = `
 <main>
     <h1>Node Assigment at CME educations</h1>
     <h2>Project by ${fullName}</h2>
-    <h4>Date: ${dateNow.toLocaleString().split(',')[0]}</h4>
+    <h4>Date: ${dateNow.toLocaleString().split(',')[0]} ${time}</h4>
     <p>This is an node assisgnment on the frontend app developer education at CME, couse is about frameworks, and we are learning React, and this week about Node and Git</p>
 
     <h2>Versions</h2>
@@ -247,20 +258,6 @@ app.get('/', (req, res) => {
 app.get('/test', (req, res) => {
   res.send('just checking so this works, could add files or what ever');
 });
-
-// if used as html template literal to show on screen ?
-/* 
-
-  const html = `
-  <p class="text">
-  Your local time is </p>
-  <span>${hrs}</span> :
-  <span>${min}</span> :
-  <span>${sec}</span> 
-  `;
-  clock.innerHTML = html;
-};
-*/
 
 /* 
 const tick = () => {
