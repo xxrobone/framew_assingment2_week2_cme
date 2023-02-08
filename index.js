@@ -8,7 +8,8 @@ import { exec } from 'child_process';
 import util from 'util';
 
 const app = express();
-app.set('port', 5000);
+const PORT = '5000';
+app.set('port', PORT);
 
 // dident get it work first with __dirname found a sollution here
 // https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/
@@ -159,6 +160,10 @@ const html = `
     It's ${days(startDate, currentDate)} ${text} course started
     & ${days(endDate, currentDate)} ${text} course ends
     </p>
+    <h2>Express server</h2>
+    <p>
+    server is hosted on port ${PORT}
+    </p>
 </main>
 </body>
 </html>
@@ -225,6 +230,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/'));
 });
 
+app.get('/test', (req, res) => {
+  res.send('just checking so this works, could add files or what ever');
+});
+
 // if used as html template literal to show on screen ?
 /* 
 
@@ -254,4 +263,4 @@ const tick = () => {
 setInterval(tick, 1000);
  */
 
-app.listen(5000);
+app.listen(PORT);
