@@ -6,6 +6,9 @@ import chalk from 'chalk';
 import fs from 'fs'; // create file system
 import { exec } from 'child_process';
 import util from 'util';
+import pkg from 'date-fns';
+
+import { Command } from 'commander';
 
 const app = express();
 const PORT = '5000';
@@ -22,20 +25,72 @@ const asyncExec = util.promisify(exec);
 
 const name = 'Robert';
 const lastname = 'Wägar';
+
+// ========================= START OF DATE-FNS =================== //
+
+const formatDistanceToNow = pkg.formatDistanceToNow;
+const parse = pkg.parse;
+const set = pkg.set;
+const isToday = pkg.isToday;
+const isAfter = pkg.isAfter;
+const isBefore = pkg.isBefore;
+
+const startOfCourse = new Date(2023, 0, 31);
+const endOfCourse = new Date(2023, 4, 8);
+console.log(formatDistanceToNow(startOfCourse));
+
+const argumentParser = new Command();
+argumentParser.option('--date');
+argumentParser.parse();
+
+const dateStringSentAsArgument = argumentParser.args[0];
+const dateSentAsArgument = parse(
+  dateStringSentAsArgument,
+  'yyyy-MM-dd',
+  new Date()
+);
+const currDate = set(new Date(), {
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  milliseconds: 0,
+});
+
+console.log('isToday', isToday(dateSentAsArgument));
+console.log('isAfter', isAfter(dateSentAsArgument, currDate));
+console.log('isBefore', isBefore(dateSentAsArgument, currDate));
+
+const isDatePastPresentOrFuture = (
+  dateSentAsArgument = '01/31/2022',
+  currDate
+) => {
+  let difference;
+
+  let compDate = new Date(dateSentAsArgument);
+  // check if date is past or present
+  if (currDate > compDate) {
+    difference = currentDate.getTime() - compDate.getTime();
+    text = ' days since ';
+  } else if (compDate > currDate) {
+    difference = compDate.getTime() - currDate.getTime();
+    text = ' days left until ';
+  } else {
+    difference = 0;
+  }
+
+  // getting days using this calculation
+  let dayDifference = Math.ceil(difference / (1000 * 3600 * 24));
+  return dayDifference;
+};
+
+// ========================= END OF DATE-FNS =================== //
+
+// === DATES WITHOUT LIBRARY === USING DATE METHOD ///
 const dateNow = new Date();
-/* 
-let day = dateNow.getDay();
-let month = dateNow.getMonth() + 1;
-let year = dateNow.getYear();
 
- const newDate = year + '/' + month + '/' + day; 
- */
-// for my "clock" hehe
-const now = new Date();
-
-const hrs = now.getHours();
-const min = now.getMinutes();
-// if using seconds const sec = now.getSeconds();
+const hrs = dateNow.getHours();
+const min = dateNow.getMinutes();
+// if using seconds const sec = dateNow.getSeconds();
 
 // check dates between when course started and today
 let startDate = new Date('01/31/2023');
@@ -44,7 +99,7 @@ let currentDate = new Date();
 let text;
 
 // past time difference, if going forward would be changing pos of start and todays or use and other variable like endDate or similar
-const days = (comparisonDate = '01/31/2022', currentDate) => {
+const compareDates = (comparisonDate = '01/31/2022', currentDate) => {
   let difference;
 
   let compDate = new Date(comparisonDate);
@@ -64,13 +119,17 @@ const days = (comparisonDate = '01/31/2022', currentDate) => {
   return dayDifference;
 };
 
+// END DATE SECTION //
+
 console.log(
   chalk.hex('#4203c9')(
-    days(startDate, currentDate) + ' ' + text + ' course started \n'
+    compareDates(startDate, currentDate) + ' ' + text + ' course started \n'
   )
 );
 console.log(
-  chalk.hex('#4203c9')(days(endDate, currentDate) + ' ' + text + ' Funkcamp')
+  chalk.hex('#4203c9')(
+    compareDates(endDate, currentDate) + ' ' + text + ' Funkcamp'
+  )
 );
 
 const fullName = `${name} ${lastname}`;
@@ -90,24 +149,17 @@ console.log(chalk.yellow('Yellow - Usually shows to wait!'));
 const { stdout, stderr } = await asyncExec('git --version');
 console.log(`git version: ${stdout}`);
 
-// writing files and adding data
-// create folder dir
-
-/* const folderName = 'files'
-fs.mkdir(`/${folderName}`, { recursive: true }, (err) => {
-  if (err) throw err;
-}); */
-
-// on this dateNow. toIsostring replacing - with /
+// on this Using date-fns on the md file /
 const data = `
 # Assignment 2
 ### at cme - course frameworks <br> 
 - Name: ${fullName} <br> 
-- Date: ${dateNow
-  .toISOString()
-  .replace('-', '/')
-  .split('T')[0]
-  .replace('-', '/')} <br> 
+- Date: ${isToday(dateSentAsArgument)} <br> 
+- ${formatDistanceToNow(
+  startOfCourse
+)} since course started and ${formatDistanceToNow(
+  endOfCourse
+)} until course ends
 - Npm & node: ${process.env.npm_config_user_agent} <br> 
 - Git version: ${stdout}
 `;
@@ -117,7 +169,7 @@ await fs.promises.writeFile('./files/index.md', data);
 // in this file we keep date and time in local time
 fs.writeFile(
   './files/assignment2_1.md',
-  `This file is written by ${fullName} on date: ${dateNow.toLocaleString()}`,
+  `This file is written by who ever started the program on this date: ${dateNow.toLocaleString()}... YEAH BUDDY!`,
   (err, data) => {
     console.log('file succesfully written');
   }
@@ -130,14 +182,6 @@ fs.writeFile(
     console.log('file succesfully written');
   }
 );
-
-// create folder public
-/* fs.mkdir('/public', { recursive: true }, (err) => {
-  if (err) throw err;
-}); */
-
-// with promise would be like this
-// fs.promises.mkdir('/tmp/a/apple', { recursive: true }).catch(console.error);
 
 // html "data" :<span>${sec}</span> if I want to put in seconds
 const time = `
@@ -170,8 +214,8 @@ const html = `
 
     <h2>Dates</h2>
     <p>
-    It's ${days('01/31/2023', currentDate)} ${text} course started
-    & ${days(endDate, currentDate)} ${text} course ends </Br></br>
+    It's ${compareDates('01/31/2023', currentDate)} ${text} course started
+    & ${compareDates(endDate, currentDate)} ${text} course ends </Br></br>
     So you can choose if you wanna set in a date like so '01/02/23' in the days function or if you do an variable like so const thisDate = new Date('04/08/2023')
     </br>
     Example 1: <span> days('01/31/2023',currentDate ) </span> 
@@ -276,13 +320,13 @@ app.get('/test', (req, res) => {
 
 /* 
 const tick = () => {
-  const now = new Date();
+  const dateNow = new Date();
 
-  const hrs = now.getHours();
+  const hrs = dateNow.getHours();
 
-  const min = now.getMinutes();
+  const min = dateNow.getMinutes();
 
-  const sec = now.getSeconds();
+  const sec = dateNow.getSeconds();
 
   console.log(`${hrs} : ${min} : ${sec}`);
 };

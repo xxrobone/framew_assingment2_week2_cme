@@ -29,4 +29,12 @@ npm run test
 - takes in server function from server.js file and a result object 
 - there is commented fail tests in the test.js file, you can try out 
 
+## about the dates
+So I used to version of dates and comparison, just because it was the assignment to use a library. 
+But is used in the MD file not the html file, there i use my own but... 
+
+### conclusion about dates
+
+The js date formats seems so simple, but handling them properly between browsers and having the right time/date format can be very complicated. Even backed by a library or robust international standard, variation between browsers can cause unexpected results. Very messy. 
+
 
