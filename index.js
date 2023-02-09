@@ -29,6 +29,7 @@ const fullName = `${name} ${lastname}`;
 
 // ========================= START OF DATE-FNS =================== //
 
+
 const formatDistanceToNow = pkg.formatDistanceToNow;
 const parse = pkg.parse;
 const set = pkg.set;
@@ -44,12 +45,12 @@ const argumentParser = new Command();
 argumentParser.option('--date');
 argumentParser.parse();
 
-const dateStringSentAsArgument = argumentParser.args[0];
-const dateSentAsArgument = parse(
+/* const dateStringSentAsArgument = argumentParser.args[0]; */
+/* const dateSentAsArgument = parse(
   dateStringSentAsArgument,
   'yyyy-MM-dd',
   new Date()
-);
+); */
 const currDate = set(new Date(), {
   hours: 0,
   minutes: 0,
@@ -89,7 +90,8 @@ isDatePastPresentOrFuture(endOfCourse, currDate);
 
 // ========================= END OF DATE-FNS =================== //
 
-// === DATES WITHOUT LIBRARY === USING DATE METHOD ///
+// === DATES WITHOUT LIBRARY === USING JS DATE METHOD ///
+// using this in my index.html file //
 const dateNow = new Date();
 
 const hrs = dateNow.getHours();
@@ -223,6 +225,9 @@ const html = `
     Example 1: <span> days('01/31/2023',currentDate ) </span> 
     </br>
     Example 2: <span> days(endDate, currentDate)</span>
+    </br>
+    </br>
+    Dates can really be a mess and there is few libraries to use I tried out date-fns too
     
     </p>
     <h2>Express server</h2>

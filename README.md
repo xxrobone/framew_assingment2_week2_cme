@@ -37,4 +37,6 @@ But is used in the MD file not the html file, there i use my own but...
 
 The js date formats seems so simple, but handling them properly between browsers and having the right time/date format can be very complicated. Even backed by a library or robust international standard, variation between browsers can cause unexpected results. Very messy. 
 
+- Starting with v2.0.0-beta.1 date-fns doesn't accept strings as date arguments. Please use `parseISO` to parse strings. See: https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#string-arguments
+
 
