@@ -44,14 +44,16 @@ let currentDate = new Date();
 let text;
 
 // past time difference, if going forward would be changing pos of start and todays or use and other variable like endDate or similar
-const days = (comparisonDate, currentDate) => {
+const days = (comparisonDate = '01/31/2022', currentDate) => {
   let difference;
+
+  let compDate = new Date(comparisonDate);
   // check if date is past or present
-  if (currentDate > comparisonDate) {
-    difference = currentDate.getTime() - comparisonDate.getTime();
+  if (currentDate > compDate) {
+    difference = currentDate.getTime() - compDate.getTime();
     text = ' days since ';
-  } else if (comparisonDate > currentDate) {
-    difference = comparisonDate.getTime() - currentDate.getTime();
+  } else if (compDate > currentDate) {
+    difference = compDate.getTime() - currentDate.getTime();
     text = ' days left until ';
   } else {
     difference = 0;
@@ -157,7 +159,7 @@ const html = `
 <main>
     <h1>Node Assigment at CME educations</h1>
     <h2>Project by ${fullName}</h2>
-    <h4>Date: ${dateNow.toLocaleString().split(',')[0]} ${time}</h4>
+    <h4>Todays date: ${dateNow.toLocaleString().split(',')[0]} ${time}</h4>
     <p>This is an node assisgnment on the frontend app developer education at CME, couse is about frameworks, and we are learning React, and this week about Node and Git</p>
 
     <h2>Versions</h2>
@@ -168,20 +170,28 @@ const html = `
 
     <h2>Dates</h2>
     <p>
-    It's ${days(startDate, currentDate)} ${text} course started
-    & ${days(endDate, currentDate)} ${text} course ends
+    It's ${days('01/31/2023', currentDate)} ${text} course started
+    & ${days(endDate, currentDate)} ${text} course ends </Br></br>
+    So you can choose if you wanna set in a date like so '01/02/23' in the days function or if you do an variable like so const thisDate = new Date('04/08/2023')
+    </br>
+    Example 1: <span> days('01/31/2023',currentDate ) </span> 
+    </br>
+    Example 2: <span> days(endDate, currentDate)</span>
+    
     </p>
     <h2>Express server</h2>
     <p>
-    server is hosted on port ${PORT}
+    To use write
+    <span>npm run dev</span>
+    Server is hosted on port ${PORT}
     </p>
 
     <h2>Testing with Chai and Mocha</h2>
     <p>
-      This I have only tried once before, and it took awhile, I also tested 
-      Jest and read about SuperTest for use testing http get, post, put, delete, using chai-http on this one :D.
-      I know compenies want you to have knowledge of testing so will try it out with
-      react too, do some project using TDD, also read about BDD
+      This test can be run by writing <span>npm run test</span> in the console, it will test a server that is pulled from the  server file
+      on port 6000 and a object result, I did it separetly, because i tried 2 other libraries and decided I go with Mocha and Chai. 
+      Will try more testing with React, Testing Library, Jest & Cypress 
+      I also read about differences between TDD and BDD. 
     </p>
 </main>
 </body>
@@ -240,6 +250,11 @@ h4 {
   font-weight: 200;
   letter-spacing: 2px;
   line-height: 1.5;
+}
+
+span {
+  background-color: black;
+  color: white;
 }
 
 @media screen and (min-width: 768px) {    

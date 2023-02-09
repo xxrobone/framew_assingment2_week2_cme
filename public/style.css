@@ -50,6 +50,11 @@ h4 {
   line-height: 1.5;
 }
 
+span {
+  background-color: black;
+  color: white;
+}
+
 @media screen and (min-width: 768px) {    
   main {
       width: 60%;
