@@ -25,6 +25,7 @@ const asyncExec = util.promisify(exec);
 
 const name = 'Robert';
 const lastname = 'Wägar';
+const fullName = `${name} ${lastname}`;
 
 // ========================= START OF DATE-FNS =================== //
 
@@ -56,32 +57,35 @@ const currDate = set(new Date(), {
   milliseconds: 0,
 });
 
-console.log('isToday', isToday(dateSentAsArgument));
-console.log('isAfter', isAfter(dateSentAsArgument, currDate));
-console.log('isBefore', isBefore(dateSentAsArgument, currDate));
-
-const isDatePastPresentOrFuture = (
-  dateSentAsArgument = '01/31/2022',
-  currDate
-) => {
+// I know loooooooongest function name :D LooooL
+const isDatePastPresentOrFuture = (dateSentAsArgument, currDate) => {
   let difference;
-
+  let text;
   let compDate = new Date(dateSentAsArgument);
   // check if date is past or present
   if (currDate > compDate) {
-    difference = currentDate.getTime() - compDate.getTime();
-    text = ' days since ';
+    difference = currDate.getTime() - compDate.getTime();
+    text = ' is in the past ';
+    console.log('isBefore', isBefore(dateSentAsArgument, currDate));
+    console.log(chalk.hex('#888')(text));
   } else if (compDate > currDate) {
     difference = compDate.getTime() - currDate.getTime();
-    text = ' days left until ';
+    text = ' is in the future ';
+    console.log('isAfter', isAfter(dateSentAsArgument, currDate));
+    console.log(chalk.hex('#888')(text));
   } else {
     difference = 0;
+    console.log('isToday', isToday(dateSentAsArgument));
+    text = 'is today';
+    console.log(chalk.hex('#888')(text));
   }
 
   // getting days using this calculation
   let dayDifference = Math.ceil(difference / (1000 * 3600 * 24));
   return dayDifference;
 };
+isDatePastPresentOrFuture(startOfCourse, currDate);
+isDatePastPresentOrFuture(endOfCourse, currDate);
 
 // ========================= END OF DATE-FNS =================== //
 
@@ -96,8 +100,8 @@ const min = dateNow.getMinutes();
 let startDate = new Date('01/31/2023');
 let endDate = new Date('04/08/2023');
 let currentDate = new Date();
-let text;
 
+let text;
 // past time difference, if going forward would be changing pos of start and todays or use and other variable like endDate or similar
 const compareDates = (comparisonDate = '01/31/2022', currentDate) => {
   let difference;
@@ -132,8 +136,6 @@ console.log(
   )
 );
 
-const fullName = `${name} ${lastname}`;
-
 // this date we remove the time
 console.log(
   chalk.hex('#f47a60')(
@@ -154,7 +156,7 @@ const data = `
 # Assignment 2
 ### at cme - course frameworks <br> 
 - Name: ${fullName} <br> 
-- Date: ${isToday(dateSentAsArgument)} <br> 
+- Date: ${currDate} and is it really today ? ${isToday(currDate)} <br> 
 - ${formatDistanceToNow(
   startOfCourse
 )} since course started and ${formatDistanceToNow(
