@@ -29,7 +29,6 @@ const fullName = `${name} ${lastname}`;
 
 // ========================= START OF DATE-FNS =================== //
 
-
 const formatDistanceToNow = pkg.formatDistanceToNow;
 const parse = pkg.parse;
 const set = pkg.set;
@@ -39,18 +38,18 @@ const isBefore = pkg.isBefore;
 
 const startOfCourse = new Date(2023, 0, 31);
 const endOfCourse = new Date(2023, 4, 8);
-console.log(formatDistanceToNow(startOfCourse));
+console.log('since course started: ' + formatDistanceToNow(startOfCourse));
 
 const argumentParser = new Command();
 argumentParser.option('--date');
 argumentParser.parse();
 
-/* const dateStringSentAsArgument = argumentParser.args[0]; */
-/* const dateSentAsArgument = parse(
+const dateStringSentAsArgument = argumentParser.args[0];
+const dateSentAsArgument = parse(
   dateStringSentAsArgument,
   'yyyy-MM-dd',
   new Date()
-); */
+);
 const currDate = set(new Date(), {
   hours: 0,
   minutes: 0,
@@ -66,12 +65,12 @@ const isDatePastPresentOrFuture = (dateSentAsArgument, currDate) => {
   // check if date is past or present
   if (currDate > compDate) {
     difference = currDate.getTime() - compDate.getTime();
-    text = ' is in the past ';
+    text = ' given date is in the past, from --date ';
     console.log('isBefore', isBefore(dateSentAsArgument, currDate));
     console.log(chalk.hex('#888')(text));
   } else if (compDate > currDate) {
     difference = compDate.getTime() - currDate.getTime();
-    text = ' is in the future ';
+    text = ' given date is in the future, from --date ';
     console.log('isAfter', isAfter(dateSentAsArgument, currDate));
     console.log(chalk.hex('#888')(text));
   } else {
@@ -85,8 +84,10 @@ const isDatePastPresentOrFuture = (dateSentAsArgument, currDate) => {
   let dayDifference = Math.ceil(difference / (1000 * 3600 * 24));
   return dayDifference;
 };
-isDatePastPresentOrFuture(startOfCourse, currDate);
-isDatePastPresentOrFuture(endOfCourse, currDate);
+// check with dateSent as argutment
+isDatePastPresentOrFuture(dateSentAsArgument, currDate);
+
+/* isDatePastPresentOrFuture(endOfCourse, currDate); */
 
 // ========================= END OF DATE-FNS =================== //
 
@@ -129,12 +130,16 @@ const compareDates = (comparisonDate = '01/31/2022', currentDate) => {
 
 console.log(
   chalk.hex('#4203c9')(
-    compareDates(startDate, currentDate) + ' ' + text + ' course started \n'
+    '\n' +
+      compareDates(startDate, currentDate) +
+      ' ' +
+      text +
+      ' course started \n'
   )
 );
 console.log(
   chalk.hex('#4203c9')(
-    compareDates(endDate, currentDate) + ' ' + text + ' Funkcamp'
+    '\n' + compareDates(endDate, currentDate) + ' ' + text + ' course ends'
   )
 );
 
